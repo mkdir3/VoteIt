@@ -16,9 +16,9 @@ Une page Administration sera aussi disponible.
 
 ## Installation
 
-VoteIt requiert [Node.js](https://nodejs.org/) v12+ pour fonctionner.
+*VoteIt requiert [Node.js](https://nodejs.org/) v12+ pour fonctionner.*
 
-Installez les dépendances et lancez un serveur.
+**Installez les dépendances et lancez un serveur.**
 
 ```sh
 cd VoteIt
@@ -27,7 +27,7 @@ composer i
 php artisan serve
 ```
 
-Votre serveur sera lancé à cette adresse:
+**Votre serveur sera lancé à cette adresse:**
 
 ```sh
 127.0.0.1:8000
@@ -35,11 +35,16 @@ Votre serveur sera lancé à cette adresse:
 
 
 
-Si erreur Webpack, dans votre bash :
+**Si erreur Webpack, dans votre bash :**
 ```sh
 export NODE_OPTIONS=--openssl-legacy-provider
 ```
 
+## Plugins
+
+- [@tailwindcss/line-clamp] - **Tailwind Line clamp**
+  
+  [@tailwindcss/line-clamp]: <https://github.com/tailwindlabs/tailwindcss-line-clamp>
 
 ## License
 
