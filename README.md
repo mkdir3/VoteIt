@@ -3,7 +3,6 @@
 [![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=?style=plastic&logo=laravel&logoColor=white)](#)
 
 [![GitHub commits](https://badgen.net/github/commits/mkdir3/VoteIt/main)](https://github.com/mkdir3/VoteIt/commit/)
-[![GitHub commits](https://badgen.net/github/last-commit/mkdir3/VoteIt/main)](https://github.com/mkdir3/VoteIt/commit/)
 
 ## Concept de l'application
 
