@@ -43,8 +43,10 @@ export NODE_OPTIONS=--openssl-legacy-provider
 ## Plugins
 
 - [@tailwindcss/line-clamp] - **Tailwind Line clamp**
+- [@tailwindcss/forms] - **Tailwind Forms**
   
   [@tailwindcss/line-clamp]: <https://github.com/tailwindlabs/tailwindcss-line-clamp>
+  [@tailwindcss/forms]: <https://github.com/tailwindlabs/tailwindcss-forms>
 
 ## License
 
