@@ -2,6 +2,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Aplinejs property */
+[x-cloak] {
+    display: none !important;
+}
+
 /* Vertical line to the comments */
 .comments-container::before {
     position: absolute;
