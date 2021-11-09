@@ -21,23 +21,16 @@
 
             <div class="w-full mx-2 md:mx-4">
                 <h4 class="text-xl font-semibold">
-                    <a href="#" class="hover:underline">Un magnifique titre</a>
+                    <a href="#" class="hover:underline">{{ $idea->title }}</a>
                 </h4>
                 <div class="text-gray-600 mt-3 line-clamp-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis numquam quo libero perferendis odit,
-                    dolore voluptate molestias dignissimos sapiente autem quod commodi fugiat cum deserunt sint eligendi
-                    ea et magnam? Alias reiciendis unde minus, sapiente rem nobis. Quo sint natus ipsam voluptatibus
-                    nulla adipisci pariatur ratione assumenda provident, iste rerum eum praesentium magni aliquam cum
-                    nisi dolorem minima, alias, velit doloremque? Est, quasi quae. Exercitationem, atque! Recusandae qui
-                    sunt, quasi dolorum, officia velit quod eligendi maiores itaque corrupti vitae explicabo repellat
-                    facilis sapiente perferendis sit quae est tempore. Necessitatibus similique voluptatem odit
-                    voluptatum minus officiis totam nam ipsa, quo culpa?
+                    {{ $idea->description }}
                 </div>
                 <div x-data="{ isOpen: false }" class="flex flex-col md:flex-row md:items-center justify-between mt-6">
                     <div class="flex items-center text-xs text-gray-400 font-semibold space-x-2">
-                        <div class="hidden md:block font-bold text-gray-900">John Doe</div>
+                        <div class="hidden md:block font-bold text-gray-900">{{ $idea->user->name }}</div>
                         <div class="hidden md:block">&bull;</div>
-                        <div>Il y a 10 heures</div>
+                        <div>{{ $idea->created_at->diffForHumans() }}</div>
                         <div>&bull;</div>
                         <div>Catégorie 1</div>
                         <div>&bull;</div>
