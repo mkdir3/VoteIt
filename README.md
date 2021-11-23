@@ -47,12 +47,15 @@ export NODE_OPTIONS=--openssl-legacy-provider
 - [@barry-vdh/laravel-debugbar] - **Laravel DebugBar**
 - [@cviebrock/eloquent-sluggable] - **Eloquent Sluggable**
 - [@livewire/livewire] - **Laravel Livewire**
+- [@paratestphp/paratest] - **ParaTest**
   
   [@tailwindcss/line-clamp]: <https://github.com/tailwindlabs/tailwindcss-line-clamp>
   [@tailwindcss/forms]: <https://github.com/tailwindlabs/tailwindcss-forms>
   [@barry-vdh/laravel-debugbar]: <https://github.com/barryvdh/laravel-debugbar>
   [@cviebrock/eloquent-sluggable]: <https://github.com/cviebrock/eloquent-sluggable>
   [@livewire/livewire]: <https://github.com/livewire/livewire>
+  [@paratestphp/paratest]: <https://github.com/paratestphp/paratest>
+  
 
 ## License
 
