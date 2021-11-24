@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Category;
 use App\Models\Idea;
+use App\Models\Status;
 use Database\Factories\IdeaFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,15 +20,20 @@ class ShowIdeasTest extends TestCase
         $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
         $categoryTwo = Category::factory()->create(['name' => 'Categorie 2']);
 
+        $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+        $statusTwo = Status::factory()->create(['name' => 'En attente', 'classes' => 'bg-purple text-white']);
+
         $ideaOne = Idea::factory()->create([
             'title' => 'Ma première idée',
             'category_id' => $categoryOne->id,
+            'status_id' => $statusOne->id,
             'description' => 'Description de ma première idée',
         ]);
 
         $ideaTwo = Idea::factory()->create([
             'title' => 'Ma seconde idée',
             'category_id' => $categoryTwo->id,
+            'status_id' => $statusTwo->id,
             'description' => 'Description de ma seconde idée',
         ]);
 
@@ -36,7 +42,10 @@ class ShowIdeasTest extends TestCase
         $response->assertSuccessful();
 
         $response->assertSee($categoryOne->name); 
-        $response->assertSee($categoryTwo->name); 
+        $response->assertSee($categoryTwo->name);
+        
+        $response->assertSee($statusOne->name); 
+        $response->assertSee($statusTwo->name); 
 
         $response->assertSee($ideaOne->title); 
         $response->assertSee($ideaOne->description); 
@@ -50,9 +59,12 @@ class ShowIdeasTest extends TestCase
         {
             $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
 
+            $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
             $idea = Idea::factory()->create([
                 'title' => 'Ma première idée',
                 'category_id' => $categoryOne->id,
+                'status_id' => $statusOne->id,
                 'description' => 'Description de ma première idée',
             ]);
     
@@ -61,6 +73,7 @@ class ShowIdeasTest extends TestCase
             $response->assertSuccessful();
 
             $response->assertSee($categoryOne->name); 
+            $response->assertSee($statusOne->name);
             $response->assertSee($idea->title); 
             $response->assertSee($idea->description);  
         }
@@ -70,8 +83,11 @@ class ShowIdeasTest extends TestCase
         {
             $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
             
+            $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
             Idea::factory(Idea::PAGINATION_COUNT + 1)->create([
                 'category_id' => $categoryOne->id,
+                'status_id' => $statusOne->id,
             ]);
 
             // ErrorException: Creating default object from empty value
