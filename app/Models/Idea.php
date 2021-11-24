@@ -30,8 +30,15 @@ class Idea extends Model
         ];
     }
 
+    // An idea belongs to one and only one user
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    // An idea has one and only one category
+    public function category() 
+    {
+        return $this->belongsTo(Category::class);
     }
 }
