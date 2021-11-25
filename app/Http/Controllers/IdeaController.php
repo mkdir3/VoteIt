@@ -18,7 +18,7 @@ class IdeaController extends Controller
         // Before 'with' use : 23 queries
         // After 3
         return view('idea.index', [
-            'ideas' => Idea::with('user', 'category', 'status')->simplePaginate(Idea::PAGINATION_COUNT),
+            'ideas' => Idea::with('user', 'category', 'status')->latest('id')->simplePaginate(Idea::PAGINATION_COUNT),
         ]);
     }
 
