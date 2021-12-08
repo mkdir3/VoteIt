@@ -46,6 +46,11 @@ class Idea extends Model
         return $this->belongsTo(Status::class);
     }
 
+    public function votes()
+    {
+        return $this->belongsToMany(User::class, 'votes');
+    }
+
     public function getStatusClasses()
     {
         // This function was replaced by adding a column 'classes' in the status table
