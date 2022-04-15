@@ -13,6 +13,7 @@ class CreateVotesTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
             $table->unique(['idea_id', 'user_id']);
