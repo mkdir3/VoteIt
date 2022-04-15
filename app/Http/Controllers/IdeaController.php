@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Idea;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -17,11 +18,15 @@ class IdeaController extends Controller
         // Using 'with' property to make less queries
         // Before 'with' use : 23 queries
         // After 3
+        //Adding subquery to retrieve if the user has voted to this idea
         return view('idea.index', [
             'ideas' => Idea::with('user', 'category', 'status')
-            ->withCount('votes')
-            ->latest('id')
-            ->simplePaginate(Idea::PAGINATION_COUNT),
+                ->addSelect(['voted_by_user' => Vote::select('id')
+                    ->where('user_id', auth()->id())
+                    ->whereColumn('idea_id', 'ideas.id')])
+                ->withCount('votes')
+                ->latest('id')
+                ->simplePaginate(Idea::PAGINATION_COUNT),
         ]);
     }
 

@@ -22,38 +22,35 @@
     <header class="flex flex-col md:flex-row items-center justify-between px-8 py-4">
         <div class="flex justify-between items-center">
             <a href="/">
-                <img src="https://www.redditinc.com/assets/images/site/reddit-logo.png" alt="VoteIt"
-                    class="w-10 h-10">
+                <img src="https://www.redditinc.com/assets/images/site/reddit-logo.png" alt="VoteIt" class="w-10 h-10">
             </a>
             <h1 class="font-semibold text-lg ml-2">VoteIt</h1>
         </div>
 
         <div class="flex items-center mt-2 md:mt-0">
             @if (Route::has('login'))
-                <div class="top-0 right-0 px-6 py-4">
-                    @auth
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+            <div class="top-0 right-0 px-6 py-4">
+                @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
 
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                         this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </a>
-                        </form>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
-                            in</a>
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
+                @else
+                <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log
+                    in</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}"
-                                class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                @endif
+                @endauth
+            </div>
             @endif
             <a href="#">
-                <img src="https://gravatar.com/avatar/000000000000000000000000000000000000?d=mp&f=y" alt="avatar"
-                    class="w-10 h-10 rounded-full">
+                <img src="https://gravatar.com/avatar/000000000000000000000000000000000000?d=mp&f=y" alt="avatar" class="w-10 h-10 rounded-full">
             </a>
         </div>
     </header>
@@ -69,26 +66,24 @@
                     <h3 class="font-semibold text-base">Ajoutez une idée</h3>
                     <p class="text-xs mt-4">
                         @auth
-                            Dites nous ce qu'il vous passe par la tête.
+                        Dites nous ce qu'il vous passe par la tête.
                         @else
-                            Inscrivez-vous et postez votre première idée !
+                        Inscrivez-vous et postez votre première idée !
                         @endauth
                     </p>
                 </div>
 
                 @auth
-                    <livewire:create-idea />
+                <livewire:create-idea />
                 @else
-                    <div class="my-6 text-center">
-                        <a href="{{ route('login') }}"
-                            class="inline-block justify-center w-1/2 h-11 text-xs bg-blue font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3">
-                            <span class="ml-1 text-white">Se connecter</span>
-                        </a>
-                        <a href="{{ route('register') }}"
-                                class="inline-block justify-center mt-2 w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-1">
-                                <span class="ml-1">Créer un compte</span>
-                            </a>
-                    </div>
+                <div class="my-6 text-center">
+                    <a href="{{ route('login') }}" class="inline-block justify-center w-1/2 h-11 text-xs bg-blue font-semibold rounded-xl border border-blue hover:bg-blue-hover transition duration-150 ease-in px-6 py-3">
+                        <span class="ml-1 text-white">Se connecter</span>
+                    </a>
+                    <a href="{{ route('register') }}" class="inline-block justify-center mt-2 w-1/2 h-11 text-xs bg-gray-200 font-semibold rounded-xl border border-gray-200 hover:border-gray-400 transition duration-150 ease-in px-6 py-1">
+                        <span class="ml-1">Créer un compte</span>
+                    </a>
+                </div>
                 @endauth
 
             </div>
@@ -96,19 +91,15 @@
         <div class="md:w-175 md:px-0 w-full px-2">
             <nav class="hidden md:flex items-center justify-between text-xs">
                 <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
-                    <li><a href="" class="border-b-4 pb-3 border-blue">All Ideas (87)</a></li>
-                    <li><a href=""
-                            class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">Considering
+                    <li><a href="" class="border-b-4 pb-3 border-blue">TOUTES (87)</a></li>
+                    <li><a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">EN ATTENTE
                             (6)</a></li>
-                    <li><a href=""
-                            class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">In
-                            Progress (1)</a></li>
+                    <li><a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">EN COURS (1)</a></li>
                 </ul>
 
                 <ul class="flex uppercase font-semibold border-b-4 pb-3 space-x-10">
-                    <li><a href="" class="border-b-4 pb-3 border-blue">Implemented (10)</a></li>
-                    <li><a href=""
-                            class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">Closed
+                    <li><a href="" class="border-b-4 pb-3 border-blue">VALIDÉ (10)</a></li>
+                    <li><a href="" class="text-gray-400 transition duration-150 ease-in border-b-4 pb-3 hover:border-blue hover:text-blue">CLÔTURÉE
                             (55)</a></li>
                 </ul>
             </nav>

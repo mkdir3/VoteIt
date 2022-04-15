@@ -85,7 +85,35 @@ class VotesShowPageTest extends TestCase
             'idea' => $idea,
             'votesCount' => 5,
         ])->assertSet('votesCount', 5)
-            ->assertSeeHtml('<div class="text-sm font-bold leading-none">5</div>')
-            ->assertSeeHtml('<div class="text-xl leading-snug">5</div>');
+            ->assertSeeHtml('<div class="text-sm font-bold leading-none ">5</div>')
+            ->assertSeeHtml('<div class="text-xl leading-snug ">5</div>');
+    }
+
+    /** @test */
+    public function user_who_is_logged_in_shows_voted_if_idea_already_voted_for()
+    {
+        $user = User::factory()->create();
+
+        $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
+
+        $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusOne->id,
+        ]);
+
+        Vote::factory()->create([
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(IdeaShow::class, [
+                'idea' => $idea,
+                'votesCount' => 5,
+            ])->assertSet('hasVoted', true)
+            ->assertSee('Déjà voté');
     }
 }
