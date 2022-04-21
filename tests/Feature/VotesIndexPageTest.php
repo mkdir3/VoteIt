@@ -120,4 +120,101 @@ class VotesIndexPageTest extends TestCase
             ])->assertSet('hasVoted', true)
             ->assertSee('Déjà voté');
     }
+
+    /** @test */
+    public function user_who_is_not_logged_in_is_redirected_to_login_page_when_trying_to_vote()
+    {
+        $user = User::factory()->create();
+
+        $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
+
+        $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusOne->id,
+        ]);
+
+        Livewire::test(IdeaIndex::class, [
+            'idea' => $idea,
+            'votesCount' => 5,
+        ])
+            ->call('vote')
+            ->assertRedirect(route('login'));
+    }
+
+    /** @test */
+    public function user_who_is_logged_in_can_vote_for_idea()
+    {
+        $user = User::factory()->create();
+
+        $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
+
+        $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusOne->id,
+        ]);
+
+        $this->assertDatabaseMissing('votes', [
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(IdeaIndex::class, [
+                'idea' => $idea,
+                'votesCount' => 5,
+            ])
+            ->call('vote')
+            ->assertSet('votesCount', 6)
+            ->assertSet('hasVoted', true);
+
+        $this->assertDatabaseHas('votes', [
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function user_who_is_logged_in_can_remove_vote_for_idea()
+    {
+        $user = User::factory()->create();
+
+        $categoryOne = Category::factory()->create(['name' => 'Categorie 1']);
+
+        $statusOne = Status::factory()->create(['name' => 'Ouvert', 'classes' => 'bg-gray-200']);
+
+        $idea = Idea::factory()->create([
+            'user_id' => $user->id,
+            'category_id' => $categoryOne->id,
+            'status_id' => $statusOne->id,
+        ]);
+
+        Vote::factory()->create([
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+
+        $this->assertDatabaseHas('votes', [
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+
+        Livewire::actingAs($user)
+            ->test(IdeaIndex::class, [
+                'idea' => $idea,
+                'votesCount' => 5,
+            ])
+            ->call('removeVote')
+            ->assertSet('votesCount', 4)
+            ->assertSet('hasVoted', false);
+
+        $this->assertDatabaseMissing('votes', [
+            'idea_id' => $idea->id,
+            'user_id' => $user->id,
+        ]);
+    }
 }
