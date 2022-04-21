@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use App\Models\Idea;
+use App\Models\Vote;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class IdeasIndex extends Component
+{
+    use WithPagination;
+
+    public function render()
+    {
+        // Using 'with' property to make less queries
+        // Before 'with' use : 23 queries
+        // After 3
+        //Adding subquery to retrieve if the user has voted to this idea
+        return view('livewire.ideas-index', [
+            'ideas' => Idea::with('user', 'category', 'status')
+                ->addSelect(['voted_by_user' => Vote::select('id')
+                    ->where('user_id', auth()->id())
+                    ->whereColumn('idea_id', 'ideas.id')])
+                ->withCount('votes')
+                ->latest('id')
+                ->simplePaginate(Idea::PAGINATION_COUNT),
+        ]);
+    }
+}

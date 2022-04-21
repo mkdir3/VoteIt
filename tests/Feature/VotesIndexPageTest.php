@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Http\Livewire\IdeaIndex;
+use App\Http\Livewire\IdeasIndex;
 use App\Models\Category;
 use App\Models\Idea;
 use App\Models\Status;
@@ -37,7 +38,7 @@ class VotesIndexPageTest extends TestCase
     }
 
     /** @test */
-    public function index_page_correctly_receives_votes_count()
+    public function ideas_index_livewire_component_correctly_receives_votes_count()
     {
         $user = User::factory()->create();
         $userTwo = User::factory()->create();
@@ -62,7 +63,7 @@ class VotesIndexPageTest extends TestCase
             'user_id' => $userTwo->id,
         ]);
 
-        $this->get(route('idea.index', $idea))
+        Livewire::test(IdeasIndex::class)
             ->assertViewHas('ideas', function ($ideas) {
                 return $ideas->first()->votes_count == 2;
             });
@@ -110,12 +111,12 @@ class VotesIndexPageTest extends TestCase
             'user_id' => $user->id,
         ]);
 
-        $response = $this->actingAs($user)->get(route('idea.index'));
-        $ideaWithVotes = $response['ideas']->items()[0];
+        $idea->votes_count = 1;
+        $idea->voted_by_user = 1;
 
         Livewire::actingAs($user)
             ->test(IdeaIndex::class, [
-                'idea' => $ideaWithVotes,
+                'idea' => $idea,
                 'votesCount' => 5,
             ])->assertSet('hasVoted', true)
             ->assertSee('Déjà voté');
@@ -179,6 +180,7 @@ class VotesIndexPageTest extends TestCase
         ]);
     }
 
+    /** @test */
     public function user_who_is_logged_in_can_remove_vote_for_idea()
     {
         $user = User::factory()->create();
@@ -198,6 +200,9 @@ class VotesIndexPageTest extends TestCase
             'user_id' => $user->id,
         ]);
 
+        $idea->votes_count = 1;
+        $idea->voted_by_user = 1;
+
         $this->assertDatabaseHas('votes', [
             'idea_id' => $idea->id,
             'user_id' => $user->id,
@@ -208,7 +213,7 @@ class VotesIndexPageTest extends TestCase
                 'idea' => $idea,
                 'votesCount' => 5,
             ])
-            ->call('removeVote')
+            ->call('vote')
             ->assertSet('votesCount', 4)
             ->assertSet('hasVoted', false);
 
