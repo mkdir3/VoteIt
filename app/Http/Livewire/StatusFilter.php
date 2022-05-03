@@ -9,36 +9,32 @@ use Livewire\Component;
 
 class StatusFilter extends Component
 {
-    // By default, index page will show all ideas
-    public $status = 'Toutes';
-
+    public $status;
     public $statusCount;
 
-    protected $queryString = [
-        'status',
-    ];
 
     // If on a single idea, remove the query string
     public function mount()
     {
         $this->statusCount = Status::getCount();
+        $this->status = request()->status ?? 'Toutes';
 
         if (Route::currentRouteName() === 'idea.show') {
             $this->status = null;
-            $this->queryString = [];
         }
     }
 
     public function setStatus($newStatus)
     {
         $this->status = $newStatus;
+        $this->emit('queryStringUpdatedStatus', $this->status);
 
         // If current route is idea show, redirect to index
-        // if ($this->getPreviousRouteName() === 'idea.show') {
-        return redirect()->route('idea.index', [
-            'status' => $this->status,
-        ]);
-        // }
+        if ($this->getPreviousRouteName() === 'idea.show') {
+            return redirect()->route('idea.index', [
+                'status' => $this->status,
+            ]);
+        }
     }
 
     public function render()

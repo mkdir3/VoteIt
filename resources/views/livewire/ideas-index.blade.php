@@ -2,10 +2,12 @@
     {{-- Filters --}}
     <div class="filters flex flex-col space-y-2 md:flex-row md:space-x-6 md:space-y-0">
         <div class="w-full md:w-1/3">
-            <select name="category" id="category" class="w-full rounded-xl border-none px-4 py-2 text-xs">
-                <option value="Category 1">Nouvelle Catégorie</option>
-                <option value="Category 2">Nouvelle Catégorie</option>
-                <option value="Category 3">Nouvelle Catégorie</option>
+            <select wire:model="category" name="category" id="category"
+                class="w-full rounded-xl border-none px-4 py-2 text-xs">
+                <option value="Toutes">Toutes</option>
+                @foreach ($categories as $category)
+                <option value="{{$category->name}}">{{$category->name}}</option>
+                @endforeach
             </select>
         </div>
         <div class="w-full md:w-1/3">
