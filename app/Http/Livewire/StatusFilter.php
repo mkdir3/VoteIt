@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Idea;
+use App\Models\Status;
 use Illuminate\Support\Facades\Route;
 use Livewire\Component;
 
@@ -10,6 +12,8 @@ class StatusFilter extends Component
     // By default, index page will show all ideas
     public $status = 'Toutes';
 
+    public $statusCount;
+
     protected $queryString = [
         'status',
     ];
@@ -17,6 +21,8 @@ class StatusFilter extends Component
     // If on a single idea, remove the query string
     public function mount()
     {
+        $this->statusCount = Status::getCount();
+
         if (Route::currentRouteName() === 'idea.show') {
             $this->status = null;
             $this->queryString = [];
